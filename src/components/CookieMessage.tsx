@@ -1,15 +1,13 @@
 "use client"
-const Link =  require("next/link");
-const {useEffect, useState} =  require("react");
-const { useRouter } =  require("next/navigation");
-const useLocalStorage =  require("use-local-storage");
+import Link from "next/link";
+import React, {useEffect, useState} from "react";
+import {useRouter} from "next/navigation";
+import useLocalStorage from "use-local-storage";
 
-
-
-const CookieMassage = ({datenschutzlink}) => {
+const CookieMessage = ({datenschutzlink}:{datenschutzlink:string}) => {
     const router = useRouter()
     const [showConsent, setShowConsent] = useState(true);
-    const [localConsent, setLocalConsent] = useLocalStorage("localConsent",false);
+    const [localConsent, setLocalConsent] = useLocalStorage<boolean>("localConsent",false);
 
     const deleteAllCookies = () => {
         document.cookie.split(";").forEach(function(c) {
@@ -46,7 +44,7 @@ const CookieMassage = ({datenschutzlink}) => {
     if (showConsent) {
         return (
             <div style={{"position":"fixed","right":"0","left":"0","bottom":"0","zIndex":50,"paddingLeft":"1.5rem","paddingRight":"1.5rem","paddingBottom":"0.5rem","pointerEvents":"none"}}>
-                <div style={{"backgroundColor":"#ffffff","padding":"0.75rem","borderRadius":"0.75rem","boxShadow":["var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color)","0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)"],"width":"fit-content","pointerEvents":"auto"}}>
+                <div style={{"backgroundColor":"#ffffff","padding":"0.75rem","borderRadius":"0.75rem","width":"fit-content","pointerEvents":"auto"}}>
                     <button
                         type="button"
                         onClick={()=>resetCookie()}
@@ -61,8 +59,8 @@ const CookieMassage = ({datenschutzlink}) => {
     } else {
         return (
             <div style={{"position":"fixed","right":"0","left":"0","bottom":"0","zIndex":50,"paddingLeft":"1.5rem","paddingRight":"1.5rem","paddingBottom":"1.5rem","pointerEvents":"none"}}>
-                <div style={{"backgroundColor":"#ffffff","padding":"1.5rem","borderRadius":"0.75rem","boxShadow":["var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color)","0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)"],"maxWidth":"36rem","pointerEvents":"auto"}}>
-                    <p style={{"fontSize":"0.875rem","lineHeight":["1.25rem","1.5rem"]}}>
+                <div style={{"backgroundColor":"#ffffff","padding":"1.5rem","borderRadius":"0.75rem","maxWidth":"36rem","pointerEvents":"auto"}}>
+                    <p style={{"fontSize":"0.875rem"}}>
                         Um dir ein optimales Erlebnis zu bieten, verwenden wir Technologien wie Cookies, um Geräteinformationen zu speichern und/oder darauf zuzugreifen. Wenn du diesen Technologien zustimmst, können wir Daten wie das Surfverhalten oder eindeutige IDs auf dieser Website verarbeiten. Wenn du deine Zustimmung nicht erteilst oder zurückziehst, können bestimmte Merkmale und Funktionen beeinträchtigt werden.{' '}
                         <Link href={datenschutzlink} className="font-semibold text-indigo-600 dark:text-indigo-500">
                             Datenschutzerklärung
@@ -84,7 +82,7 @@ const CookieMassage = ({datenschutzlink}) => {
     }
 }
 
-CookieMassage.defaultProps = {
+CookieMessage.defaultProps = {
     datenschutzlink:"/datenschutz",
 };
-export default CookieMassage
+export default CookieMessage

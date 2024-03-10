@@ -1,11 +1,15 @@
 {
   "name": "@gietmanic/next-cookie-message",
-  "version": "0.0.1",
+  "version": "0.0.7",
   "author": "Gietmanic - Daniel Gietmann <support@gietmanic.de>",
   "description": "",
   "private": false,
-  "main": "src/index.js",
+  "main": "src/index.ts",
   "license": "MIT",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "release": "pnpm run build && changeset publish"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/gietmanic/next-cookie-message.git"
@@ -19,5 +23,11 @@
     "use-local-storage": "^3.0.0",
     "react": "^18",
     "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.26.0",
+    "@types/react": "^18.2.64",
+    "tsup": "^6.5.0",
+    "typescript": "^4.9.4"
   }
 }
