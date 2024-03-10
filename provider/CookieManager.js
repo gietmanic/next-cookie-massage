@@ -5,45 +5,20 @@ import useLocalStorage from "use-local-storage";
 
 
 const CookieManager = ({GTag,GAnalytics}) => {
-    const [localConsent, setLocalConsent] = useLocalStorage<boolean>("localConsent",false);
+    const [localConsent, setLocalConsent] = useLocalStorage("localConsent",false);
 
-    if(GTag === undefined){
-
-        return (
-            <>
-                <GoogleAnalytics gaId={GAnalytics} />
-            </>
-        )
-    }
-    if(GAnalytics === undefined){
-        return (
-            <>
-                <GoogleTagManager gaId={GTag} />
-            </>
-        )
-    }
-    if(GAnalytics !== undefined && GTag !== undefined){
-        return (
-            <>
-                <GoogleTagManager gaId={GTag} />
-                <GoogleAnalytics gaId={GAnalytics} />
-            </>
-        )
-    }
-
-
-
-
-
-    if (localConsent) {
-        return(
-            <>
-                <GoogleTagManager gtmId="GTM-N946GVBR" />
-            <GoogleAnalytics gaId="G-T5X8CBXDK8" />
-                </>
-        )
-    }
-
+    return(
+        <>
+            {GAnalytics && <GoogleAnalytics gaId={GAnalytics} />}
+            {GTag && <GoogleTagManager gaId={GTag} />}
+        </>
+    )
 }
+
+
+CookieManager.defaultProps = {
+    GTag: undefined,
+    GAnalytics: undefined,
+};
 
 export default CookieManager;

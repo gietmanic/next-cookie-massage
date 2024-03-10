@@ -1,23 +1,20 @@
 "use client"
 import Link from "next/link";
-import {deleteCookie} from 'cookies-next';
 import {useEffect, useState} from "react";
 import { useRouter } from "next/navigation";
 import useLocalStorage from "use-local-storage";
 
 
-const CookieMassage = ({link}) => {
+const CookieMassage = ({datenschutzlink}) => {
     const router = useRouter()
     const [showConsent, setShowConsent] = useState(true);
     const [localConsent, setLocalConsent] = useLocalStorage("localConsent",false);
-    const datenschutzlink = link || '/datenschutz';
 
     const deleteAllCookies = () => {
         document.cookie.split(";").forEach(function(c) {
             document.cookie = c.replace(/^ +/, "").replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
         });
     };
-
 
     useEffect(() => {
         setShowConsent(localConsent)
@@ -47,8 +44,8 @@ const CookieMassage = ({link}) => {
 
     if (showConsent) {
         return (
-            <div className="pointer-events-none fixed inset-x-0 bottom-0 px-6 pb-2 z-50">
-                <div className="pointer-events-auto ml-auto w-fit rounded-xl bg-background p-3 shadow-lg ring-1 ring-gray-900/10 dark:ring-gray-600/50">
+            <div style={{"position":"fixed","right":"0","left":"0","bottom":"0","zIndex":50,"paddingLeft":"1.5rem","paddingRight":"1.5rem","paddingBottom":"0.5rem","pointerEvents":"none"}}>
+                <div style={{"backgroundColor":"#ffffff","padding":"0.75rem","borderRadius":"0.75rem","boxShadow":["var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color)","0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)"],"width":"fit-content","pointerEvents":"auto"}}>
                     <button
                         type="button"
                         onClick={()=>resetCookie()}
@@ -62,23 +59,20 @@ const CookieMassage = ({link}) => {
 
     } else {
         return (
-            <div className="pointer-events-none fixed inset-x-0 bottom-0 px-6 pb-6 z-50">
-                <div className="pointer-events-auto ml-auto max-w-xl rounded-xl bg-background dark:bg-gray-800 p-6 shadow-lg ring-1 ring-gray-900/10 dark:ring-gray-600/50">
-                    <p className="text-sm leading-6 text-foreground dark:text-gray-100">
+            <div style={{"position":"fixed","right":"0","left":"0","bottom":"0","zIndex":50,"paddingLeft":"1.5rem","paddingRight":"1.5rem","paddingBottom":"1.5rem","pointerEvents":"none"}}>
+                <div style={{"backgroundColor":"#ffffff","padding":"1.5rem","borderRadius":"0.75rem","boxShadow":["var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color)","0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)"],"maxWidth":"36rem","pointerEvents":"auto"}}>
+                    <p style={{"fontSize":"0.875rem","lineHeight":["1.25rem","1.5rem"]}}>
                         Um dir ein optimales Erlebnis zu bieten, verwenden wir Technologien wie Cookies, um Geräteinformationen zu speichern und/oder darauf zuzugreifen. Wenn du diesen Technologien zustimmst, können wir Daten wie das Surfverhalten oder eindeutige IDs auf dieser Website verarbeiten. Wenn du deine Zustimmung nicht erteilst oder zurückziehst, können bestimmte Merkmale und Funktionen beeinträchtigt werden.{' '}
                         <Link href={datenschutzlink} className="font-semibold text-indigo-600 dark:text-indigo-500">
                             Datenschutzerklärung
                         </Link>
-                        .
                     </p>
-                    <div className="mt-4 flex items-center gap-x-5">
+                    <div style={{"display":"flex","marginTop":"1rem","columnGap":"1.25rem","alignItems":"center"}}>
                         <button onClick={() => acceptCookie()}>
                             Alle akzeptieren
                         </button>
                         <button
                             onClick={() => declineCookie()}
-                            color={"warning"}
-                            variant={"bordered"}
                         >
                             Nur erforderliche akzeptieren
                         </button>
@@ -88,4 +82,8 @@ const CookieMassage = ({link}) => {
         )
     }
 }
+
+CookieMassage.defaultProps = {
+    datenschutzlink:"/datenschutz",
+};
 export default CookieMassage
