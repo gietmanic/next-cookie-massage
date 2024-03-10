@@ -8,10 +8,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gietmanic/next-cookie-massage.git"
+    "url": "https://github.com/gietmanic/next-cookie-message.git"
   },
   "bugs": {
-    "url": "https://github.com/gietmanic/next-cookie-massage/issues"
+    "url": "https://github.com/gietmanic/next-cookie-message/issues"
   },
   "dependencies": {
     "@next/third-parties": "^14.1.3",
