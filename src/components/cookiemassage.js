@@ -1,8 +1,9 @@
 "use client"
-import Link from "next/link";
-import {useEffect, useState} from "react";
-import { useRouter } from "next/navigation";
-import useLocalStorage from "use-local-storage";
+const Link =  require("next/link");
+const {useEffect, useState} =  require("react");
+const { useRouter } =  require("next/navigation");
+const useLocalStorage =  require("use-local-storage");
+
 
 
 const CookieMassage = ({datenschutzlink}) => {

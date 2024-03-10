@@ -1,6 +1,6 @@
 'use client'
-import {GoogleAnalytics,GoogleTagManager} from "@next/third-parties/google";
-import useLocalStorage from "use-local-storage";
+const {GoogleAnalytics,GoogleTagManager} =  require("@next/third-parties/google");
+const useLocalStorage =  require("use-local-storage");
 
 
 
