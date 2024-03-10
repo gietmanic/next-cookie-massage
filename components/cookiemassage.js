@@ -1,12 +1,23 @@
 "use client"
 import Link from "next/link";
-import useLocalStorage from "use-local-storage";
+import {deleteCookie} from 'cookies-next';
+import {useEffect, useState} from "react";
 import { useRouter } from "next/navigation";
+import useLocalStorage from "use-local-storage";
 
-const CookieMassage = () => {
-    const [showConsent, setShowConsent] = useState(true);
-    const [localConsent, setLocalConsent] = useLocalStorage < boolean > ("localConsent", false);
+
+const CookieMassage = ({link}) => {
     const router = useRouter()
+    const [showConsent, setShowConsent] = useState(true);
+    const [localConsent, setLocalConsent] = useLocalStorage("localConsent",false);
+    const datenschutzlink = link || '/datenschutz';
+
+    const deleteAllCookies = () => {
+        document.cookie.split(";").forEach(function(c) {
+            document.cookie = c.replace(/^ +/, "").replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
+        });
+    };
+
 
     useEffect(() => {
         setShowConsent(localConsent)
@@ -22,8 +33,6 @@ const CookieMassage = () => {
     const resetCookie = () => {
         setShowConsent(true)
         setLocalConsent(false)
-        deleteCookie("_ga_B6R1XGYWKB")
-        deleteCookie("_ga")
         router.refresh();
         router.replace(window.location.pathname);
     }
@@ -31,6 +40,7 @@ const CookieMassage = () => {
     const declineCookie = () => {
         setShowConsent(true)
         setLocalConsent(false)
+        deleteAllCookies();
         router.refresh();
         router.replace(window.location.pathname);
     }
@@ -56,7 +66,7 @@ const CookieMassage = () => {
                 <div className="pointer-events-auto ml-auto max-w-xl rounded-xl bg-background dark:bg-gray-800 p-6 shadow-lg ring-1 ring-gray-900/10 dark:ring-gray-600/50">
                     <p className="text-sm leading-6 text-foreground dark:text-gray-100">
                         Um dir ein optimales Erlebnis zu bieten, verwenden wir Technologien wie Cookies, um Geräteinformationen zu speichern und/oder darauf zuzugreifen. Wenn du diesen Technologien zustimmst, können wir Daten wie das Surfverhalten oder eindeutige IDs auf dieser Website verarbeiten. Wenn du deine Zustimmung nicht erteilst oder zurückziehst, können bestimmte Merkmale und Funktionen beeinträchtigt werden.{' '}
-                        <Link href="/legal/datenschutz" className="font-semibold text-indigo-600 dark:text-indigo-500">
+                        <Link href={datenschutzlink} className="font-semibold text-indigo-600 dark:text-indigo-500">
                             Datenschutzerklärung
                         </Link>
                         .
@@ -67,6 +77,8 @@ const CookieMassage = () => {
                         </button>
                         <button
                             onClick={() => declineCookie()}
+                            color={"warning"}
+                            variant={"bordered"}
                         >
                             Nur erforderliche akzeptieren
                         </button>
@@ -75,6 +87,5 @@ const CookieMassage = () => {
             </div>
         )
     }
-
 }
 export default CookieMassage
