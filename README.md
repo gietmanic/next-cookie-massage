@@ -22,7 +22,7 @@ In the Main Layout File
 Replace GTag with your GTag ID and GAnalytics with your Analytics Id
 
 ```javascript
-import Component from 'my-project'
+import {CookieManager, CookieMessage} from "@gietmanic/next-cookie-message";
 
 function App() {
   return (
@@ -33,7 +33,7 @@ function App() {
                   GAnalytics="YOUR G Analytics ID"
                 />
                 {children}
-               <Cookiemassage
+               <CookieMessage
                   datenschutzlink={"LINK ZUM DATENSCHUTZ"}
                 />
             </body>
